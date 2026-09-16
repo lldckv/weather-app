@@ -1,0 +1,13 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "Приложение прогноза погоды (Vanilla JS)",
+  "private": true,
+  "scripts": {
+    "start": "npx serve . -p 5200"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.4",
+    "serve": "^14.2.1"
+  }
+}

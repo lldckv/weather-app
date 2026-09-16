@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Прогноз погоды</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <h1 class="app__title">🌤️ Прогноз погоды</h1>
+      <div class="app__actions">
+        <button id="refreshBtn" class="btn btn--secondary" type="button">
+          <span class="btn__icon" aria-hidden="true">⟳</span> Обновить
+        </button>
+        <button id="addCityBtn" class="btn btn--primary" type="button">+ Добавить город</button>
+      </div>
+    </header>
+
+    <main class="app__main">
+      <div id="citiesContainer" class="cities-grid"></div>
+      <p id="emptyState" class="empty-state" hidden>Нет данных о городах. Добавьте город, чтобы увидеть прогноз.</p>
+    </main>
+  </div>
+
+  <div id="onboardingModal" class="modal" hidden>
+    <div class="modal__overlay"></div>
+    <div class="modal__content">
+      <h2 class="modal__title">Укажите город</h2>
+      <p class="modal__subtitle">
+        Не удалось получить доступ к геолокации. Введите город вручную, чтобы увидеть прогноз погоды.
+      </p>
+      <form id="onboardingForm" class="city-form" autocomplete="off" novalidate>
+        <div class="city-form__field">
+          <input type="text" id="onboardingInput" class="city-form__input" placeholder="Например: Москва" />
+          <div id="onboardingDropdown" class="city-form__dropdown" hidden></div>
+          <div id="onboardingError" class="city-form__error" hidden></div>
+        </div>
+        <button type="submit" class="btn btn--primary city-form__submit">Показать прогноз</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модальное окно добавления дополнительного города -->
+  <div id="addCityModal" class="modal" hidden>
+    <div class="modal__overlay" id="modalOverlay"></div>
+    <div class="modal__content">
+      <button class="modal__close" id="modalCloseBtn" type="button" aria-label="Закрыть">&times;</button>
+      <h2 class="modal__title">Добавить город</h2>
+      <form id="addCityForm" class="city-form" autocomplete="off" novalidate>
+        <div class="city-form__field">
+          <input type="text" id="cityInput" class="city-form__input" placeholder="Например: Санкт-Петербург" />
+          <div id="cityDropdown" class="city-form__dropdown" hidden></div>
+          <div id="cityError" class="city-form__error" hidden></div>
+        </div>
+        <button type="submit" class="btn btn--primary city-form__submit">Добавить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Шаблон карточки погоды -->
+  <template id="weatherCardTemplate">
+    <article class="weather-card">
+      <div class="weather-card__header">
+        <div class="weather-card__heading">
+          <h3 class="weather-card__title"></h3>
+          <span class="weather-card__subtitle"></span>
+        </div>
+        <button class="weather-card__remove" type="button" title="Удалить город" hidden>&times;</button>
+      </div>
+      <div class="weather-card__body">
+        <div class="weather-card__loading">
+          <div class="spinner"></div>
+          <span>Загрузка прогноза…</span>
+        </div>
+        <div class="weather-card__error" hidden>
+          <p class="weather-card__error-text"></p>
+          <button class="btn btn--small weather-card__retry" type="button">Повторить</button>
+        </div>
+        <div class="weather-card__content" hidden>
+          <div class="weather-card__current">
+            <span class="weather-card__icon"></span>
+            <span class="weather-card__temp"></span>
+            <span class="weather-card__desc"></span>
+          </div>
+          <div class="weather-card__forecast"></div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- Шаблон дня прогноза -->
+  <template id="forecastDayTemplate">
+    <div class="forecast-day">
+      <span class="forecast-day__label"></span>
+      <span class="forecast-day__icon"></span>
+      <span class="forecast-day__temps"><span class="forecast-day__max"></span> / <span class="forecast-day__min"></span></span>
+    </div>
+  </template>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
